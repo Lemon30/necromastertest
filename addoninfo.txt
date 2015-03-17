@@ -1,0 +1,13 @@
+"AddonInfo"
+{
+	"addonSteamAppID"				"816"
+	"addontitle"					"necromastertest"
+	"addonversion"					"0.1"
+	"addontagline"					"necromastertest"
+	"addonauthor"					"XXX"
+	"addonSteamGroupName"			""
+	"addonauthorSteamID"			""
+	"addonContent_Campaign"			"0"
+	"addonURL0"						""
+	"addonDescription"				"necromastertest"
+}
