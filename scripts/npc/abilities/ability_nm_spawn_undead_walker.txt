@@ -18,12 +18,12 @@
         "SpawnUnit"
         {
             "UnitName"    "npc_nm_min_undead_walker"
-            "Target"      "CASTER"
+            "Target"      "CASTER""
             "UnitCount"   "1"
             "UnitLimit"   "100"
             "GrantsGold"  "0"
             "GrantsXP"    "0"
-            "SpawnRadius" "10"
+            "SpawnRadius" "100"
             "OnSpawn"
             {
                 "ApplyModifier"

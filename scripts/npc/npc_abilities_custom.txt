@@ -25,7 +25,7 @@
 	            "UnitLimit"   "100"
 	            "GrantsGold"  "0"
 	            "GrantsXP"    "0"
-	            "SpawnRadius" "10"
+	            "SpawnRadius" "300"
 	            "OnSpawn"
 	            {
 	                "ApplyModifier"
@@ -42,8 +42,7 @@
 	            }
 	        }
 	    }
-	
-	    }
+	}
 	"example_ability"
 	{
 		"ID"							"1852"
