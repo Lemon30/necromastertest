@@ -1,0 +1,43 @@
+"ability_nm_spawn_undead_walker"
+{
+    "BaseClass"             "ability_datadriven"
+    "AbilityTextureName"    "warlock_fatal_bonds"
+    "MaxLevel"              "1"
+ 
+    "AbilityBehavior"    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+ 
+    "AbilityGoldCost"    "10"
+   
+    "OnSpellStart"
+    {
+		"RunScript"
+        {
+                    "ScriptFile"    "buildings/rally_point.lua"
+                    "Function"      "Check"
+        }
+        "SpawnUnit"
+        {
+            "UnitName"    "npc_nm_min_undead_walker"
+            "Target"      "CASTER"
+            "UnitCount"   "1"
+            "UnitLimit"   "100"
+            "GrantsGold"  "0"
+            "GrantsXP"    "0"
+            "SpawnRadius" "10"
+            "OnSpawn"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName" "modifier_phased"
+                    "Target"       "TARGET"
+                    "Duration"     "0.03"
+                }
+				"RunScript"
+                {
+                    "ScriptFile"    "buildings/rally_point.lua"
+                    "Function"      "MoveToRallyPoint"
+                }
+            }
+        }
+    }
+}

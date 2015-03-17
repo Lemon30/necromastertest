@@ -30,7 +30,7 @@ DISABLE_FOG_OF_WAR_ENTIRELY = true      -- Should we disable fog of war entirely
 --USE_STANDARD_DOTA_BOT_THINKING = false  -- Should we have bots act like they would in Dota? (This requires 3 lanes, normal items, etc)
 USE_STANDARD_HERO_GOLD_BOUNTY = false    -- Should we give gold for hero kills the same as in Dota, or allow those values to be changed?
 
-USE_CUSTOM_TOP_BAR_VALUES = true        -- Should we do customized top bar values or use the default kill count per team?
+USE_CUSTOM_TOP_BAR_VALUES = false        -- Should we do customized top bar values or use the default kill count per team?
 TOP_BAR_VISIBLE = true                  -- Should we display the top bar score/count at all?
 SHOW_KILLS_ON_TOPBAR = true             -- Should we display kills only on the top bar? (No denies, suicides, kills by neutrals)  Requires USE_CUSTOM_TOP_BAR_VALUES
 
@@ -38,7 +38,7 @@ ENABLE_TOWER_BACKDOOR_PROTECTION = false  -- Should we enable backdoor protectio
 REMOVE_ILLUSIONS_ON_DEATH = false       -- Should we remove all illusions if the main hero dies?
 DISABLE_GOLD_SOUNDS = false             -- Should we disable the gold sound when players get gold?
 
-END_GAME_ON_KILLS = true                -- Should the game end after a certain number of kills?
+END_GAME_ON_KILLS = false                -- Should the game end after a certain number of kills?
 KILLS_TO_END_GAME_FOR_TEAM = 50         -- How many kills for a team should signify an end of game?
 
 USE_CUSTOM_HERO_LEVELS = true           -- Should we allow heroes to have custom levels?
@@ -78,7 +78,7 @@ end
 ]]
 function necromastertest:OnFirstPlayerLoaded()
 	--print("[NECROMASTERTEST] First Player has loaded")
-end
+	end
 
 --[[
   This function is called once and only once after all players have loaded into the game, right as the hero selection time begins.
@@ -101,8 +101,8 @@ function necromastertest:OnHeroInGame(hero)
 	if not self.greetPlayers then
 		-- At this point a player now has a hero spawned in your map.
 		
-	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("necromastertest! ", "magenta") .. ColorIt("v0.1", "blue");
-	    local secondLine = ColorIt("Developer: ", "green") .. ColorIt("XXX", "orange")
+	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("Necromaster Test Version! ", "magenta") .. ColorIt("v0.1", "blue");
+	    local secondLine = ColorIt("Developer: ", "green") .. ColorIt("Lemon", "yellow")
 		-- Send the first greeting in 4 secs.
 		Timers:CreateTimer(4, function()
 	        GameRules:SendCustomMessage(firstLine, 0, 0)
@@ -126,7 +126,7 @@ function necromastertest:OnHeroInGame(hero)
 	InitAbilities(hero)
 
 	-- Show a popup with game instructions.
-    ShowGenericPopupToPlayer(hero.player, "#necromastertest_instructions_title", "#necromastertest_instructions_body", "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN )
+    --ShowGenericPopupToPlayer(hero.player, "#necromastertest_instructions_title", "#necromastertest_instructions_body", "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN )
 
 	-- This line for example will set the starting gold of every hero to 500 unreliable gold
 	hero:SetGold(500, false)
@@ -205,6 +205,7 @@ function necromastertest:OnGameRulesStateChange(keys)
 				return 1
 			end})
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		
 		necromastertest:OnGameInProgress()
 	end
 end
@@ -214,11 +215,12 @@ function necromastertest:OnNPCSpawned(keys)
 	--print("[NECROMASTERTEST] NPC Spawned")
 	--PrintTable(keys)
 	local npc = EntIndexToHScript(keys.entindex)
-
+	
 	if npc:IsRealHero() and npc.bFirstSpawned == nil then
 		npc.bFirstSpawned = true
 		necromastertest:OnHeroInGame(npc)
 	end
+	
 end
 
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
@@ -376,7 +378,15 @@ function necromastertest:OnPlayerPickHero(keys)
 
 	local heroClass = keys.hero
 	local heroEntity = EntIndexToHScript(keys.heroindex)
-	local player = EntIndexToHScript(keys.player)
+	local player = EntIndexToHScript(keys.player)	
+	
+    local playerID = heroEntity:GetPlayerID()
+
+    local building = Entities:FindByName(nil, "minion_spawner")
+    building:SetOwner(heroEntity)
+	building:SetTeam(DOTA_TEAM_BADGUYS)
+    building:SetControllableByPlayer(playerID, true)
+	
 end
 
 -- A player killed another player in a multi-team context

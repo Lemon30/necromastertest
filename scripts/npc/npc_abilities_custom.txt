@@ -1,17 +1,56 @@
-// Dota Abilities Override File
-// DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
-
 "DOTAAbilities"
 {
-	"Version"		"1"
+	"ability_nm_spawn_undead_walker"
+	{
+	    "BaseClass"             "ability_datadriven"
+	    "AbilityTextureName"    "warlock_fatal_bonds"
+	    "MaxLevel"              "1"
+	 
+	    "AbilityBehavior"    "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	 
+	    "AbilityGoldCost"    "10"
+	   
+	    "OnSpellStart"
+	    {
+			"RunScript"
+	        {
+	                    "ScriptFile"    "buildings/rally_point.lua"
+	                    "Function"      "Check"
+	        }
+	        "SpawnUnit"
+	        {
+	            "UnitName"    "npc_nm_min_undead_walker"
+	            "Target"      "CASTER"
+	            "UnitCount"   "1"
+	            "UnitLimit"   "100"
+	            "GrantsGold"  "0"
+	            "GrantsXP"    "0"
+	            "SpawnRadius" "10"
+	            "OnSpawn"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName" "modifier_phased"
+	                    "Target"       "TARGET"
+	                    "Duration"     "0.03"
+	                }
+					"RunScript"
+	                {
+	                    "ScriptFile"    "buildings/rally_point.lua"
+	                    "Function"      "MoveToRallyPoint"
+	                }
+	            }
+	        }
+	    }
 	
+	    }
 	"example_ability"
 	{
 		"ID"							"1852"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"BaseClass"						"ability_datadriven"
 		"AbilityTextureName"			"holdout_blade_fury"
-
+	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1000"
@@ -27,7 +66,7 @@
 			"particle"					"particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
 		}
-
+	
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"300"
@@ -179,18 +218,64 @@
 			}
 		}
 	}
-  
-//-------------------
-// Dummy stuff
-//-------------------
-  
+	"minion_spawner_create"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityTextureName"			"lich_chain_frost"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0 1.0 1.0 1.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Channelling
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1"
+		
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+	
+	
+		"OnChannelFinish"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"		"minion_spawner"
+				"Target" "POINT"
+				"Duration"	"%wolf_duration"
+				"UnitCount"	"1" 
+				//"UnitLimit"	"2"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+			}
+		}
+	}
+	//-------------------
+	// Dummy stuff
+	//-------------------
+	  
 	"necromastertest_dummy_unit"
 	{
 		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "rubick_empty1"
 		"MaxLevel"                      "1"
-
+	
 		"Modifiers"
 		{
 			"dummy_unit"
@@ -206,8 +291,7 @@
 			}
 		}
 	}
-  
-    "necromastertest_empty1"
+	"necromastertest_empty1"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -217,7 +301,6 @@
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "rubick_empty1"
 	}
-	
 	"necromastertest_empty2"
 	{
 		// General
@@ -228,7 +311,6 @@
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "rubick_empty1"
 	}
-	
 	"necromastertest_empty3"
 	{
 		// General
@@ -239,7 +321,6 @@
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "rubick_empty1"
 	}
-	
 	"necromastertest_empty4"
 	{
 		// General
@@ -250,7 +331,6 @@
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "rubick_empty1"
 	}
-	
 	"necromastertest_empty5"
 	{
 		// General
@@ -261,7 +341,6 @@
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "rubick_empty1"
 	}
-	
 	"necromastertest_empty6"
 	{
 		// General
@@ -273,4 +352,3 @@
 		"AbilityTextureName"            "rubick_empty1"
 	}
 }
-
